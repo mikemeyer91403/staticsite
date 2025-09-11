@@ -12,7 +12,7 @@ class TestHTMLNode(unittest.TestCase):
     def test_props_none(self):
         node = HTMLNode("p", "This is a paragraph", None, None)
         props = node.props_to_html()
-        self.assertIsNone(props)
+        self.assertEqual(props, "")
 
     def test_repr(self):
         node = HTMLNode("link", "This is a link", None, {"href": "https://www.apple.com","target":"_blank",})
@@ -22,6 +22,7 @@ class TestHTMLNode(unittest.TestCase):
         self.assertEqual(node.__repr__(), expected)
     
     """
+    # figure out how to actually use this
     def test_to_html(self):
         node = HTMLNode("p", "This is a paragraph", None, None)
         
