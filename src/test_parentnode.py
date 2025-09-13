@@ -33,6 +33,6 @@ class TestParentNode(unittest.TestCase):
         child_node2 = LeafNode("i", "italic")
         children = [child_node1,child_node2]
         pnode = ParentNode("p",children)
-        print(pnode)
+        #print(pnode)
         expected = 'ParentNode(p, children:[LeafNode(b, Boldly GO, props:None), LeafNode(i, italic, props:None)], props:None)'
         self.assertEqual(pnode.__repr__(), expected)
