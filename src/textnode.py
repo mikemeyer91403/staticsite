@@ -1,5 +1,7 @@
 from enum import Enum
 from leafnode import LeafNode
+import re
+
 
 class TextType(Enum):
     TEXT = "plain"
