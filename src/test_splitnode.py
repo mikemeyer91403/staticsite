@@ -37,6 +37,16 @@ class TestSplitNode(unittest.TestCase):
                 TextNode("bold and refreshing", TextType.BOLD),
             ]
         )
+    def test_split_bold_end(self):
+        node = TextNode("CocaCola is **bold and refreshing**", TextType.TEXT)
+        new_nodes = split_nodes_delimiter([node], "**", TextType.BOLD)
+        self.assertEqual(
+            new_nodes,
+            [ 
+                TextNode("CocaCola is ", TextType.TEXT),
+                TextNode("bold and refreshing", TextType.BOLD),
+            ]
+        )
 
     def test_split_italic_node(self):
         node = TextNode("This is text with _shiny italics_ inline", TextType.TEXT)
@@ -49,6 +59,15 @@ class TestSplitNode(unittest.TestCase):
                 TextNode(" inline", TextType.TEXT),
             ]
         )
+    def test_split_italic_single(self):
+        node = TextNode("_slanted and refreshing_", TextType.TEXT)
+        new_nodes = split_nodes_delimiter([node], "_", TextType.ITALIC)
+        self.assertEqual(
+            new_nodes,
+            [ 
+                TextNode("slanted and refreshing", TextType.ITALIC),
+            ]
+        )
 
     def test_split_code_node(self):
         node = TextNode("This is text with `code` inline", TextType.TEXT)
@@ -59,6 +78,16 @@ class TestSplitNode(unittest.TestCase):
                 TextNode("This is text with ", TextType.TEXT),
                 TextNode("code", TextType.CODE),
                 TextNode(" inline", TextType.TEXT),
+            ]
+        )
+
+    def test_split_code_single(self):
+        node = TextNode("`crack is the code`", TextType.TEXT)
+        new_nodes = split_nodes_delimiter([node], "`", TextType.CODE)
+        self.assertEqual(
+            new_nodes,
+            [ 
+                TextNode("crack is the code", TextType.CODE),
             ]
         )
 
