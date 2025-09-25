@@ -19,5 +19,10 @@ class TestLeafNode(unittest.TestCase):
         expected = "This is just text"
         self.assertEqual(node.to_html(), expected)
 
+    def test_leaf_dot(self):
+        node = LeafNode(None, ".")
+        expected = "."
+        self.assertEqual(node.to_html(),expected)
+
     #TODO: add a test for the __repr__method
 

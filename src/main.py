@@ -48,10 +48,11 @@ def main():
     print ("moving source files...")
 
     # Delete public directory and copy static files to public
+    # empty_directory("./public")
     directory_copier( "./static", "./public")
 
     #generate a page from contect/index.md using template.html and write to public/index.html
-    generate_page("./content/index.md","template.html", "public/index.html")
+    generate_page("./content/index.md","./template.html", "public/index.html")
     print ("... Done!")
 
 main()

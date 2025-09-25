@@ -49,7 +49,7 @@ def text_node_to_html_node(textnode):
         # src = f" src='{textnode.url}'"
         #alttext = f"alt='{textnode.text}'"
         #props = [src, alttext]
-        return LeafNode("img", None, props)
+        return LeafNode("img", "", props)
     
     else:
         raise Exception("invalid text type")

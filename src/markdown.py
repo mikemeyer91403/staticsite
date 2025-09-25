@@ -20,11 +20,11 @@ class BlockType(Enum):
 def markdown_to_blocks(markdown):
     rawblocks = markdown.split("\n\n")
     blocks = []
-    for raw in rawblocks:
-        stripped = raw.strip(' \n')
-        if stripped != "":
-            blocks.append(stripped)
-
+    for block in rawblocks:
+        if block == "":
+            continue
+        block = block.strip()
+        blocks.append(block)
     return blocks
 
 def block_to_block_type(blocktext):

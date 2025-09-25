@@ -11,7 +11,7 @@ from markdown import (
 )
 
 class TestMarkdown(unittest.TestCase):
-
+    unittest.TestCase.maxDiff = None
 ###################################################################################
 #
 #  Extraction tests
@@ -211,6 +211,17 @@ the **same** even with inline stuff
             "<div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff\n</code></pre></div>",
         )
 
+    def test_list_links(self):
+        md = """
+- [Why Glorfindel is More Impressive than Legolas](/blog/glorfindel)
+- [Why Tom Bombadil Was a Mistake](/blog/tom)
+ """       
+        node = markdown_to_html_node(md) 
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><ul><li><a href=\"/blog/glorfindel\">Why Glorfindel is More Impressive than Legolas</a></li><li><a href=\"/blog/tom\">Why Tom Bombadil Was a Mistake</a></li></ul></div>"
+        )
 
 
     def test_heading1(self):
@@ -271,6 +282,25 @@ this is paragraph text
         self.assertEqual(
             html,
             "<div><blockquote>This is a blockquote block</blockquote><p>this is paragraph text</p></div>",
+        )
+
+
+    def test_link_block(self):
+        md = "Want to get in touch? [Contact me here](/contact)."
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><p>Want to get in touch? <a href=\"/contact\">Contact me here</a>.</p></div>"
+        )
+
+    def test_other_link_block(self):
+        md = "This site was generated with a custom-built [static site generator](https://www.boot.dev/courses/build-static-site-generator-python) from the course on [Boot.dev](https://www.boot.dev)."
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><p>This site was generated with a custom-built <a href=\"https://www.boot.dev/courses/build-static-site-generator-python\">static site generator</a> from the course on <a href=\"https://www.boot.dev\">Boot.dev</a>.</p></div>"
         )
 
 
