@@ -55,3 +55,26 @@ def generate_page(from_path, template_path, dest_path):
         os.makedirs(dest_dir, exist_ok=True) #will make the subdirectories if they don't exist)
     with open(dest_path, "w") as ofile:
         ofile.write(template_html)
+
+def generate_pages_recursive(dir_path_content, template_path,dest_dir_path):
+    content_path = os.path.abspath(dir_path_content)
+    if (not os.path.exists(content_path)):
+        raise FileNotFoundError(f"Source directory {content_path} not found")
+    
+    file_list = os.listdir(content_path)
+
+    for file in file_list:
+        src_path = os.path.join(content_path, file)
+        destname = file.replace("md","html")
+        dest_path = os.path.join(dest_dir_path, destname)
+
+        if os.path.isfile(src_path):
+            print (f"==> generating {dest_path} from {src_path}")
+            generate_page(src_path, template_path, dest_path)
+        else:
+            #concatinate new directory name to path
+            contentdir = os.path.join(dir_path_content, file)
+            destdir = os.path.join(dest_dir_path, file)
+            print(f"===building dest directory {destdir}")
+            os.mkdir(destdir)
+            generate_pages_recursive(contentdir,template_path,destdir)

@@ -2,7 +2,7 @@ from textnode import TextNode
 from textnode import TextType
 import os
 import shutil
-from generator import generate_page
+from generator import generate_pages_recursive
 
 
 def empty_directory(path):
@@ -51,8 +51,8 @@ def main():
     # empty_directory("./public")
     directory_copier( "./static", "./public")
 
-    #generate a page from contect/index.md using template.html and write to public/index.html
-    generate_page("./content/index.md","./template.html", "public/index.html")
+    #generate pages from contect/ using template.html and write to public/
+    generate_pages_recursive("./content/","./template.html", "public/")
     print ("... Done!")
 
 main()
