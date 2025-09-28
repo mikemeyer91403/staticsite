@@ -32,6 +32,7 @@ def replace_placeholder(text, placeholder, replacement):
 #  - dest_path - path to write HTML file to
 def generate_page(from_path, template_path, dest_path, site_base_path):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
+    print(f"Site BasePath = {site_base_path}")
 
     #read the markdown file
     with open(from_path) as file:
@@ -50,8 +51,8 @@ def generate_page(from_path, template_path, dest_path, site_base_path):
     template_html = replace_placeholder(template_html, "{{ Content }}", content_html)
     href_replacement = f"href=\"{site_base_path}"
     src_replacement = f"src=\"{site_base_path}"
-    template_html = replace_placeholder(template_html, "href=\"/", href_replacement)
-    template_html = replace_placeholder(template_html, "src=\"/", src_replacement)
+    template_html = replace_placeholder(template_html, "href=\"", href_replacement)
+    template_html = replace_placeholder(template_html, "src=\"", src_replacement)
 
 
     # save the file to dest. path

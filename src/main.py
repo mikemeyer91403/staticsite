@@ -47,8 +47,9 @@ def directory_copier(source_dir, dest_dir):
 def main():
 
     basepath = '/'
-    if sys.argv[1] != None:
+    if len(sys.argv) > 1 and sys.argv[1] != None:
         basepath = sys.argv[1]
+        print (f"Basepath changed to: {basepath}")
 
     print ("static site generator -- starting...")
     print ("moving source files...")
@@ -58,7 +59,7 @@ def main():
     directory_copier( "./static", "./docs")
 
     #generate pages from contect/ using template.html and write to public/
-    generate_pages_recursive("./content/","./template.html", "docs/", basepath)
+    generate_pages_recursive("./content","./template.html", "docs", basepath)
     print ("... Done!")
 
 main()
