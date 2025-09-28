@@ -1,6 +1,7 @@
 from textnode import TextNode
 from textnode import TextType
 import os
+import sys
 import shutil
 from generator import generate_pages_recursive
 
@@ -44,15 +45,20 @@ def directory_copier(source_dir, dest_dir):
 
 
 def main():
+
+    basepath = '/'
+    if sys.argv[1] != None:
+        basepath = sys.argv[1]
+
     print ("static site generator -- starting...")
     print ("moving source files...")
 
     # Delete public directory and copy static files to public
     # empty_directory("./public")
-    directory_copier( "./static", "./public")
+    directory_copier( "./static", "./docs")
 
     #generate pages from contect/ using template.html and write to public/
-    generate_pages_recursive("./content/","./template.html", "public/")
+    generate_pages_recursive("./content/","./template.html", "docs/", basepath)
     print ("... Done!")
 
 main()

@@ -30,7 +30,7 @@ def replace_placeholder(text, placeholder, replacement):
 # - from_path - path to the markdown file
 #  - template_path - path to the template file to read
 #  - dest_path - path to write HTML file to
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, site_base_path):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
 
     #read the markdown file
@@ -48,6 +48,11 @@ def generate_page(from_path, template_path, dest_path):
     template_html = replace_placeholder(template_html, "{{ Title }}", title)
     #print (f"{template_html}")
     template_html = replace_placeholder(template_html, "{{ Content }}", content_html)
+    href_replacement = f"href=/\{site_base_path}"
+    src_replacement = f"src=\"{site_base_path}"
+    template_html = replace_placeholder(template_html, "href=\"/", href_replacement)
+    template_html = replace_placeholder(template_html, "src=\"/", src_replacement)
+
 
     # save the file to dest. path
     dest_dir = os.path.dirname(dest_path)
@@ -56,7 +61,7 @@ def generate_page(from_path, template_path, dest_path):
     with open(dest_path, "w") as ofile:
         ofile.write(template_html)
 
-def generate_pages_recursive(dir_path_content, template_path,dest_dir_path):
+def generate_pages_recursive(dir_path_content, template_path,dest_dir_path, site_base_path):
     content_path = os.path.abspath(dir_path_content)
     if (not os.path.exists(content_path)):
         raise FileNotFoundError(f"Source directory {content_path} not found")
@@ -70,11 +75,11 @@ def generate_pages_recursive(dir_path_content, template_path,dest_dir_path):
 
         if os.path.isfile(src_path):
             print (f"==> generating {dest_path} from {src_path}")
-            generate_page(src_path, template_path, dest_path)
+            generate_page(src_path, template_path, dest_path, site_base_path)
         else:
             #concatinate new directory name to path
             contentdir = os.path.join(dir_path_content, file)
             destdir = os.path.join(dest_dir_path, file)
             print(f"===building dest directory {destdir}")
             os.mkdir(destdir)
-            generate_pages_recursive(contentdir,template_path,destdir)
+            generate_pages_recursive(contentdir,template_path,destdir,site_base_path)
