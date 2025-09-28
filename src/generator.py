@@ -48,7 +48,7 @@ def generate_page(from_path, template_path, dest_path, site_base_path):
     template_html = replace_placeholder(template_html, "{{ Title }}", title)
     #print (f"{template_html}")
     template_html = replace_placeholder(template_html, "{{ Content }}", content_html)
-    href_replacement = f"href=/\{site_base_path}"
+    href_replacement = f"href=\"{site_base_path}"
     src_replacement = f"src=\"{site_base_path}"
     template_html = replace_placeholder(template_html, "href=\"/", href_replacement)
     template_html = replace_placeholder(template_html, "src=\"/", src_replacement)
